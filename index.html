@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أجير - تصريح حلول الموارد البشرية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        body { font-family: 'Noto Sans Arabic', sans-serif; background-color: #f8fafc; transition: all 0.3s ease; }
+        .en-mode { font-family: 'Inter', sans-serif; }
+        
+        /* ক্যাপচা ওভারলে স্টাইল */
+        #captcha-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* প্রিন্ট সেটিং */
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white; }
+            .card { border: 1px solid #eee !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <div id="captcha-overlay">
+        <div class="bg-white p-8 rounded-xl shadow-2xl border text-center">
+            <img src="logo.png" width="80px" class="mx-auto mb-4" alt="Logo">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Security Verification</h2>
+            
+            <div class="g-recaptcha" data-sitekey="6LcObbcsAAAAAL_CENlxO-RmLtrxLfwFMJn4vNAF" data-callback="onSuccess"></div>
+            
+            <p class="mt-4 text-sm text-gray-500">يرجى التحقق للمتابعة إلى التصريح</p>
+        </div>
+    </div>
+
+    <div id="main-wrapper" style="display: none;">
+        <header class="bg-white border-b px-4 md:px-12 py-4 flex justify-between items-center shadow-sm no-print">
+            <div class="flex-shrink-0">
+                <img src="logo.png" alt="Logo" class="w-[45px] md:w-[65px]">
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="window.print()" class="hidden md:flex items-center border border-gray-300 px-3 py-1.5 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50">
+                    <span id="btnPrintText">Print</span>
+                </button>
+                
+                <div onclick="toggleLanguage()" class="flex items-center text-blue-700 font-bold text-[11px] md:text-sm cursor-pointer border border-blue-200 px-3 py-1.5 rounded-lg hover:bg-blue-50">
+                    <span id="langBtn">English</span>
+                </div>
+                
+                <button id="navRegister" class="bg-[#1e3a8a] text-white px-3 md:px-6 py-2 rounded text-[11px] md:text-sm font-bold shadow-md">سجل الآن</button>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 py-12">
+            <div class="flex justify-between items-center mb-10">
+                <h1 id="mainTitle" class="text-2xl font-bold text-[#353E5F]">تصريح أجير لحلول الموارد البشرية</h1>
+                <div class="no-print flex gap-2">
+                   <button onclick="window.print()" class="md:hidden bg-gray-100 p-2 rounded">🖨️</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-600 card">
+                        <h2 id="card1Title" class="text-lg font-bold text-[#1e3a8a] border-b pb-4 mb-4 uppercase">معلومات التصريح</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                            <div><p id="lblEmpName" class="text-gray-500">اسم الموظف:</p><p class="font-bold text-gray-800">Akbor Ali Khan</p></div>
+                            <div><p id="lblStatus" class="text-gray-500">حالة التصريح:</p><span id="statusBadge" class="bg-[#10b981] text-white px-4 py-1 rounded-md text-xs font-bold inline-block mt-1 uppercase">ساري</span></div>
+                            <div><p id="lblStartDate" class="text-gray-500">تاريخ البداية:</p><p class="font-bold text-gray-800">2025-09-01</p></div>
+                            <div><p id="lblEndDate" class="text-gray-500">تاريخ الانتهاء:</p><p class="font-bold text-gray-800">2026-05-22</p></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600 card">
+                            <h2 id="card2Title" class="text-lg font-bold text-[#1e3a8a] border-b pb-4 mb-4">المنشأة المستفيدة</h2>
+                            <p id="lblCompName1" class="text-gray-500 text-xs mb-1">اسم المنشأة:</p>
+                            <p class="font-bold text-gray-800 text-sm">شركة فرع شركة السويدي اليكتريك</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600 card">
+                            <h2 id="card3Title" class="text-lg font-bold text-[#1e3a8a] border-b pb-4 mb-4">شركة الإستقدام</h2>
+                            <p id="lblCompName2" class="text-gray-500 text-xs mb-1">اسم المنشأة:</p>
+                            <p class="font-bold text-gray-800 text-sm">شركة مهارة للموارد البشرية</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-md flex flex-col items-center justify-center text-center card border-t-4 border-blue-600">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://ajeer.com.sa/verify/AkborAli" alt="QR Code" class="w-32 h-32 mb-4">
+                    <p id="qrText" class="text-xs text-gray-500 font-bold uppercase">Scan to Verify Status</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-white border-t p-6 mt-12 no-print">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <div class="flex items-center space-x-reverse space-x-6">
+                    <img src="hr.svg" width="90px" alt="HR">
+                    <img src="tk.svg" width="55px" alt="TK">
+                </div>
+                <p id="footCopy" class="my-4 md:my-0">© ٢٠٢٦ أجير حلول الموارد البشرية</p>
+                <img src="logo.png" width="50px" alt="Logo">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ক্যাপচা সফল হলে কন্টেন্ট দেখানো হবে
+        function onSuccess() {
+            setTimeout(() => {
+                document.getElementById('captcha-overlay').style.display = 'none';
+                document.getElementById('main-wrapper').style.display = 'block';
+            }, 500);
+        }
+
+        const trans = {
+            ar: {
+                langBtn: "English", navRegister: "سجل الآن", btnPrintText: "طباعة",
+                mainTitle: "تصريح أجير لحلول الموارد البشرية", card1Title: "معلومات التصريح",
+                lblEmpName: "اسم الموظف:", lblStatus: "حالة التصريح:", statusBadge: "ساري",
+                lblStartDate: "تاريخ البداية:", lblEndDate: "تاريخ الانتهاء:",
+                card2Title: "المنشأة المستفيدة", lblCompName1: "اسم المنشأة:",
+                card3Title: "شركة الإستقدام", lblCompName2: "اسم المنشأة:",
+                qrText: "Scan to Verify Status", footCopy: "© ٢٠٢٦ أجير حلول الموارد البشرية",
+                dir: "rtl", align: "right"
+            },
+            en: {
+                langBtn: "العربية", navRegister: "Register", btnPrintText: "Print",
+                mainTitle: "Ajeer HRS Permit", card1Title: "PERMIT INFORMATION",
+                lblEmpName: "Employee Name:", lblStatus: "Permit Status:", statusBadge: "Valid",
+                lblStartDate: "Start Date:", lblEndDate: "Expiry Date:",
+                card2Title: "BENEFICIARY COMPANY", lblCompName1: "Establishment Name:",
+                card3Title: "RECRUITMENT COMPANY", lblCompName2: "Establishment Name:",
+                qrText: "Scan to Verify Status", footCopy: "© 2026 Ajeer HRS",
+                dir: "ltr", align: "left"
+            }
+        };
+
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const d = trans[currentLang];
+            document.getElementById('htmlTag').dir = d.dir;
+            document.getElementById('htmlTag').lang = currentLang;
+            document.getElementById('mainTitle').style.textAlign = d.align;
+            
+            if(currentLang === 'en') document.body.classList.add('en-mode');
+            else document.body.classList.remove('en-mode');
+
+            for (let key in d) {
+                const el = document.getElementById(key);
+                if (el) el.innerText = d[key];
+            }
+        }
+    </script>
+</body>
+</html>
